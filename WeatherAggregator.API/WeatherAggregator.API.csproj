@@ -8,17 +8,18 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Filters\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\WeatherAggregator.Application\WeatherAggregator.Application.csproj" />
     <ProjectReference Include="..\WeatherAggregator.Domain\WeatherAggregator.Domain.csproj" />
     <ProjectReference Include="..\WeatherAggregator.Infrastructure\WeatherAggregator.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Filters\" />
   </ItemGroup>
 
 </Project>

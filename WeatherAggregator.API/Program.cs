@@ -1,7 +1,10 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using WeatherAggregator.API.Middlewares;
 using WeatherAggregator.API.Validators;
+using WeatherAggregator.API.DTOs;
 using WeatherAggregator.Application.Services;
 using WeatherAggregator.Domain.Interfaces;
 using WeatherAggregator.Infrastructure.Repositories;
@@ -21,19 +24,33 @@ builder.Services.AddScoped<IWeatherRepository, WeatherRepository>();
 builder.Services.AddScoped<WeatherService>();
 
 builder.Services.AddControllers();
+
+
+
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
-builder.Services.AddValidatorsFromAssemblyContaining<GetLocationsQueryValidator>();
+
+//builder.Services.AddValidatorsFromAssemblyContaining<GetLocationsQueryValidator>();
+builder.Services.AddScoped<IValidator<GetLocationsRequest>, GetLocationsRequestValidator>();
+
+builder.Services.AddScoped<IValidator<GetWeatherNewsRequest>, GetWeatherNewsRequestValidator>();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});//efara edw apnergopoiw to default validation tou asp net
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
-{
+{ 
     app.UseSwagger();
     app.UseSwaggerUI();
 }

@@ -29,22 +29,27 @@ namespace WeatherAggregator.Infrastructure.Repositories
                 var endpoint = $"http://api.openweathermap.org/geo/1.0/direct?q={cityName}&limit=5&appid={_apiKey}";
                 var response = await _httpClient.GetAsync(endpoint);
 
-                response.EnsureSuccessStatusCode();
+                if (!response.IsSuccessStatusCode) 
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    return Result<IEnumerable<Location>>.Failure($"External API Error: {errorMessage}", (int)response.StatusCode);
+                }
 
                 var result = await response.Content.ReadAsStringAsync();
                 var locations = JsonConvert.DeserializeObject<List<LocationResponse>>(result);
 
-                return Result<IEnumerable<Location>>.Success(locations.Select(loc => new Location
+                return Result<IEnumerable<Location>>.Success(locations.Select(loc => new Location //efara edw sigoura etsi ?? na to tsekarw meta
                 {
                     Name = loc.Name,
                     Latitude = loc.Lat,
                     Longitude = loc.Lon,
                     Country = loc.Country
-                }));
+                }),
+                (int)response.StatusCode);
             }
             catch (Exception ex)
             {
-                return Result<IEnumerable<Location>>.Failure($"Failed to fetch locations: {ex.Message}");
+                return Result<IEnumerable<Location>>.Failure($"Failed to fetch locations: {ex.Message}", 500); //
             }
         }
     }

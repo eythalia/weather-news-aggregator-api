@@ -21,10 +21,23 @@ namespace WeatherAggregator.Application.Services
 
         public async Task<Result<IEnumerable<Location>>> GetLocationsAsync(GetLocationsQuery query)
         {
-            if (string.IsNullOrWhiteSpace(query.CityName))
-                throw new ArgumentException("City name cannot be null or empty.");
+            
+            try
+            {
+                var locations = await _weatherRepository.GetLocationsAsync(query.CityName);
 
-            return await _weatherRepository.GetLocationsAsync(query.CityName);
+                if (!locations.Data.Any())  //this is about business logic so the controll remains on application layer
+                {
+                    return Result<IEnumerable<Location>>.Failure("No matching locations found by the Weather API.", 404);
+                }
+
+                return locations;
+            }
+            catch (Exception ex)
+            {
+                // Return failure result on any exception
+                return Result<IEnumerable<Location>>.Failure($"Error fetching locations: {ex.Message}",500);
+            }
         }
     }
 }
