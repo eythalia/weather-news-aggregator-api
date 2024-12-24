@@ -1,5 +1,5 @@
 ﻿using WeatherAggregator.API.DTOs;
-using WeatherAggregator.Domain.DTOs;
+using WeatherAggregator.Application.DTOs.Location;
 
 namespace WeatherAggregator.API.Mappers
 {
@@ -10,8 +10,8 @@ namespace WeatherAggregator.API.Mappers
             return new LocationsDTO
             {
                 Name = response.Name,
-                Latitude = response.Lat,
-                Longitude = response.Lon,
+                Latitude = response.Latitude,
+                Longitude = response.Longitude,
                 Country = response.Country
             };
         }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WeatherAggregator.Domain.DTOs
+namespace WeatherAggregator.Domain.Entities.Location
 {
-    public class LocationResponse
+    public class Location
     {
         public string Name { get; set; }
         public double Lat { get; set; }

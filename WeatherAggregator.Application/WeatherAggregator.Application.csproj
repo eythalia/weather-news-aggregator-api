@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Commands\" />
+    <Folder Include="DTOs\News\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WeatherAggregator.Domain\WeatherAggregator.Domain.csproj" />
+    <ProjectReference Include="..\WeatherAggregator.Shared\WeatherAggregator.Shared.csproj" />
   </ItemGroup>
 
 </Project>

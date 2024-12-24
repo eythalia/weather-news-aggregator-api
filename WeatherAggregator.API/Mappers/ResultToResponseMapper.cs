@@ -11,7 +11,7 @@ namespace WeatherAggregator.API.Mappers
         /// </summary>
         public static IActionResult Map<T>(Result<T> result)
         {
-            var responseBody = new GetLocationsResponse<T>
+            var responseBody = new ApiGenericResponse<T>
             {
                 Data = result.Data,
                 ErrorMessage = result.ErrorMessage,

@@ -5,10 +5,13 @@ namespace WeatherAggregator.API.Mappers
 {
     public static class WeatherNewsRequestToQueryMapper
     {
-        public static GetLocationsQuery Map (GetWeatherNewsRequest request) 
+        public static GetWeatherNewsQuery Map (GetWeatherNewsRequest request) 
         {
-            return new GetLocationsQuery { CityName = request.CityName };
-        
+            return new GetWeatherNewsQuery 
+            { 
+                CityName = request.CityName,
+                CountryName = request.CountryName
+            };
         }
 
     }

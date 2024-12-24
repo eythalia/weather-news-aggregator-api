@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WeatherAggregator.Application\WeatherAggregator.Application.csproj" />
     <ProjectReference Include="..\WeatherAggregator.Domain\WeatherAggregator.Domain.csproj" />
   </ItemGroup>
 

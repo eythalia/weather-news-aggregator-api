@@ -2,11 +2,10 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using WeatherAggregator.API.Middlewares;
 using WeatherAggregator.API.Validators;
 using WeatherAggregator.API.DTOs;
 using WeatherAggregator.Application.Services;
-using WeatherAggregator.Domain.Interfaces;
+using WeatherAggregator.Application.Interfaces;
 using WeatherAggregator.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -54,7 +53,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

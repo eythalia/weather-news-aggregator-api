@@ -42,12 +42,14 @@ namespace WeatherAggregator.API.Controllers
             var query = RequestToQueryMapper.Map(request);
 
             var locationsResult = await _weatherService.GetLocationsAsync(query);
-            
-            return ResultToResponseMapper.Map(locationsResult);
+
+            //efara edw tha mporousa na exw extra mapping alla voithaei gia na min kanw tosa polla na settarw eks arxis ta responses objects tou application ara kanw tin paradoxi me ta responses tou application opou xreiazetai gia na xw poio katharo controller k epeidi kanw teleytaio mappinh edw
+            var getLocationsResponse = ResultToResponseMapper.Map(locationsResult);
+            return getLocationsResponse;
         }
 
         [HttpGet("weather-news")]
-        public async Task<IActionResult> GetWeatherNews([FromQuery] GetWeatherNewsRequest request) 
+        public async Task<IActionResult> GetWeatherNews([FromQuery] GetWeatherNewsRequest request)
         {
             var validationResult = await _validatorWeatherNews.ValidateAsync(request);
             if (!validationResult.IsValid)
@@ -59,23 +61,17 @@ namespace WeatherAggregator.API.Controllers
             // Map the DTO to the query object
             var query = WeatherNewsRequestToQueryMapper.Map(request);
 
-            var locationsResult = await _weatherService.GetLocationsAsync(query);
+            
+            var locationsResult = await _weatherService.GetWeatherNewsAsync(query);
+
+            //efara apo edw kai katw
             if (!locationsResult.IsSuccess)
             {
                 return ResultToResponseMapper.Map(locationsResult);
             }
 
-            string countryPrefix = LocationHelper.ExtractCountryPrefix(request.CountryName);
-            var singleLocation = await LocationHelper.FilterLocationsByCountryPrefix(locationsResult, countryPrefix);
-
-            if (!singleLocation.IsSuccess) 
-            {
-                return ResultToResponseMapper.Map(singleLocation);
-            }
-            
-
             //logika edw xreiazetai mapping efara
-            return Ok(singleLocation);
+            return Ok(locationsResult);//efara na to ftiaksw meta
         }
     }
 }

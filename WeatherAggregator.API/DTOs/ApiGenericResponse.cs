@@ -1,6 +1,6 @@
 ﻿namespace WeatherAggregator.API.DTOs
 {
-    public class GetLocationsResponse<T>
+    public class ApiGenericResponse<T>
     {
         public T Data { get; set; }
         public string ErrorMessage { get; set; }
