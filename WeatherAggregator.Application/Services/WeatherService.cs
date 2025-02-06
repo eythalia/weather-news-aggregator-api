@@ -11,15 +11,16 @@ using WeatherAggregator.Application.Mappers;
 using WeatherAggregator.Application.Helpers;
 using WeatherAggregator.Application.DTOs.Location;
 using WeatherAggregator.Application.DTOs.WeatherNews;
-using WeatherAggregator.API.Mappers;
+
 
 namespace WeatherAggregator.Application.Services
 {
     public class WeatherService
     {
         private readonly IWeatherRepository _weatherRepository;
+        
 
-        public WeatherService(IWeatherRepository weatherRepository)
+        public WeatherService(IWeatherRepository weatherRepository, INewsRepository newsRepository)
         {
             _weatherRepository = weatherRepository;
         }
@@ -80,9 +81,8 @@ namespace WeatherAggregator.Application.Services
                 //efara ta modela prwta kai meta to mapping edw
                 var weatherForecastResponse = WeatherForecastToWeatherForecastResponseMapper.MapToResponse(weatherForecast.Data);
 
+                return Result<WeatherNewsResponse>.Success(weatherForecastResponse,200);
                 
-
-                return Result<WeatherNewsResponse>.Failure(weatherForecastResponse.Current.ToString(), 404); //efara ayto lathos na fygei meta ws response
             }
             catch (Exception ex)
             {

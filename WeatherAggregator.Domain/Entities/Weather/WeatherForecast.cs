@@ -13,6 +13,9 @@ namespace WeatherAggregator.Domain.Entities.Weather
         [JsonProperty("timezone_offset")]
         public int TimezoneOffset { get; set; }
 
+        [JsonProperty("timezone")]
+        public string Timezone {  get; set; }
+
         [JsonProperty("current")]
         public CurrentWeatherInfo Current { get; set; }
 
